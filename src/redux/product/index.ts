@@ -82,6 +82,9 @@ export const bookSlice = createGenericSlice({
     getBookById(state, action) {
       state.bookDetail = action.payload;
     },
+    getBookBestSaler(state, action) {
+      state.bestSaler = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(allBooksByFilter.fulfilled, (state, action) => {
@@ -117,6 +120,6 @@ export const bookSlice = createGenericSlice({
   },
 });
 
-export const { getAllBooks, getBookById } = bookSlice.actions;
+export const { getAllBooks, getBookById, getBookBestSaler } = bookSlice.actions;
 
 export default bookSlice.reducer;

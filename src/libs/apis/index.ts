@@ -4,6 +4,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
+import { GetServerSidePropsContext } from 'next';
 
 import { API_BASE_URL, COOKIE_KEYS, HTTP_STATUS } from '../../configs';
 import { ROUTERS } from '../../configs/navigators';
@@ -19,6 +20,7 @@ import { StatisticApi } from './statistics';
 import { VoucherApi } from './voucher';
 
 class GivenowApi {
+  private nextContext: GetServerSidePropsContext | null = null;
   instance: AxiosInstance;
 
   constructor() {
@@ -27,7 +29,7 @@ class GivenowApi {
     });
 
     this.instance.interceptors.request.use(
-      this.onRequestFullFilled,
+      this.onRequestFullfilled,
       this.onRequestReject
     );
 
@@ -61,17 +63,15 @@ class GivenowApi {
     }
   };
 
-  onRequestFullFilled = (config: AxiosRequestConfig): AxiosRequestConfig => {
-    if (config.headers?.['Authorization']?.length) {
-      return config;
-    }
-
-    const cookies = getCookies(null);
-    if (cookies && cookies[COOKIE_KEYS.ACCESS_TOKEN]) {
+  onRequestFullfilled = async (
+    config: AxiosRequestConfig
+  ): Promise<AxiosRequestConfig> => {
+    const cookies = getCookies(this.nextContext);
+    if (cookies[COOKIE_KEYS.ACCESS_TOKEN]) {
       const bearerToken = `Bearer ${cookies[COOKIE_KEYS.ACCESS_TOKEN]}`;
       config.headers = {
-        ...config.headers,
-        Authorization: bearerToken,
+        ...(config.headers ?? {}),
+        ['Authorization']: bearerToken,
       };
     }
 

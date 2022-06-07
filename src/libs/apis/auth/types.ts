@@ -30,6 +30,7 @@ export interface IEmployee {
   roles: string;
   firstName: string;
   lastName: string;
+  avatar?: string;
 }
 
 export interface IEmployeeCreare {

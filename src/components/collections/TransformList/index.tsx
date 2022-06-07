@@ -8,7 +8,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { IBlogApi } from '../../../libs/apis/blog/types';
-import { listBlog } from './mock';
 import ButtonForm from '../../elements/ButtonForm';
 import PopupConfirm from '../../elements/PopupConfirm';
 import { allBlogSelector } from '../../../redux/blog/selectors';
