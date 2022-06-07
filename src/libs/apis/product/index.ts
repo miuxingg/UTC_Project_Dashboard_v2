@@ -2,7 +2,7 @@
 import { Pagination } from '@mui/material';
 import { AxiosInstance } from 'axios';
 import { IPaginationOutput } from '../../../configs/types';
-import { BookQueries } from '../../utils/buildQueries';
+import { BaseQuery, BookQueries } from '../../utils/buildQueries';
 import { IBookApi, ICreateBookApi, IUpdateStatusApi } from './types';
 
 export class BookApi {
@@ -37,6 +37,11 @@ export class BookApi {
       `/books/document-status/${id}`,
       input
     );
+    return data;
+  }
+
+  async getBestSalerBooks(): Promise<IPaginationOutput<IBookApi>> {
+    const { data } = await this.axiosInstance.get('/books/best-saler');
     return data;
   }
 }

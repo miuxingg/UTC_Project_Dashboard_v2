@@ -12,7 +12,7 @@ export const transformBookToTable = (items: IBookApi[]) => {
       description: book.description,
       author: book.author,
       category: book.category,
-      cloudtag: book.cloudtag,
+      cloudtag: book?.cloudTag,
       images: book.images,
       status: book.status,
       summary: book?.summary,

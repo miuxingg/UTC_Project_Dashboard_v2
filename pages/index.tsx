@@ -19,12 +19,20 @@ import { getConfig } from '../src/redux/config';
 import { configSelector } from '../src/redux/config/selectors';
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
+import { getEmployee } from '../src/redux/auth';
+import { employeeSelector } from '../src/redux/auth/selectors';
+import { bookBestSalerSelector } from '../src/redux/product/selectors';
+import { getBookBestSaler } from '../src/redux/product';
 
 export const Home: NextPage = () => {
   const statistics = useSelector(statisticSelector);
   const dataset = useSelector(datasetSelector);
   const config = useSelector(configSelector);
-  // console.log(dataset);
+  const bookBestSalers = useSelector(bookBestSalerSelector);
+  // console.log(bookBestSalers);
+
+  // console.log(config);
+
   const datasetMapping = useMemo(() => {
     const { money, quantity } = dataset;
     const moneyData = [];
@@ -85,25 +93,25 @@ export const Home: NextPage = () => {
         </Row>
         {/***Sales & Feed***/}
         <Row>
-          <Col sm='12' lg='6' xl='7' xxl='8'>
+          <Col sm='12' lg='12' xl='12' xxl='12'>
             <SalesChart
               money={datasetMapping.money}
               quantity={datasetMapping.quantity}
             />
           </Col>
-          <Col sm='12' lg='6' xl='5' xxl='4'>
+          {/* <Col sm='12' lg='6' xl='5' xxl='4'>
             <Feeds />
-          </Col>
+          </Col> */}
         </Row>
         {/***Table ***/}
         <Row>
           <Col lg='12' sm='12'>
-            <ProjectTables />
+            <ProjectTables datas={bookBestSalers.items.slice(0, 10)} />
           </Col>
         </Row>
         {/***Blog Cards***/}
         <Row>
-          {config.blog.map((blg) => (
+          {config?.blog.map((blg) => (
             <Col sm='6' lg='6' xl='3' key={blg.title}>
               <Blog
                 image={blg.image}
@@ -123,11 +131,13 @@ export default Home;
 
 export const getServerSideProps = getServerSideWithProtectedRoute(
   async (ctx, store) => {
-    const [statistic, config, dataset] = await Promise.all([
+    const [statistic, config, dataset, bestSaler] = await Promise.all([
       apiSdk.statisticsApis.getStatistics(),
       apiSdk.configApis.getConfig(),
       apiSdk.statisticsApis.getDataset(),
+      apiSdk.bookApis.getBestSalerBooks(),
     ]);
+    store.dispatch(getBookBestSaler(bestSaler));
     store.dispatch(getStatistic(statistic));
     store.dispatch(getConfig(config));
     store.dispatch(getDataset(dataset));
