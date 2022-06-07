@@ -9,6 +9,7 @@ import orderReducer from './order';
 import blogReducer from './blog';
 import configReducer from './config';
 import voucherReducer from './voucher';
+import statisticReducer from './statistics';
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   blog: blogReducer,
   config: configReducer,
   voucher: voucherReducer,
+  statistic: statisticReducer,
 });
 
 export default rootReducer;

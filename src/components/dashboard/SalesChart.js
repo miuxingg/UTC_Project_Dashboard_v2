@@ -3,16 +3,16 @@ import dynamic from 'next/dynamic';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const SalesChart = () => {
+const SalesChart = ({ money, quantity }) => {
   const chartoptions = {
     series: [
       {
-        name: 'Iphone 13',
-        data: [0, 31, 40, 28, 51, 42, 109, 100, 1, 1, 1, 1],
+        name: 'Tiền(Triệu đồng)',
+        data: [...money],
       },
       {
-        name: 'Oneplue 9',
-        data: [0, 11, 32, 45, 32, 34, 52, 41, 1, 1, 1, 1],
+        name: 'Số lượng(Quyển)',
+        data: [...quantity],
       },
     ],
     options: {
@@ -52,10 +52,10 @@ const SalesChart = () => {
   return (
     <Card>
       <CardBody>
-        <CardTitle tag='h5'>Sales Summary</CardTitle>
-        <CardSubtitle className='text-muted' tag='h6'>
+        <CardTitle tag='h5'>Báo cáo theo tháng</CardTitle>
+        {/* <CardSubtitle className='text-muted' tag='h6'>
           Yearly Sales Report
-        </CardSubtitle>
+        </CardSubtitle> */}
         <Chart
           type='area'
           width='100%'

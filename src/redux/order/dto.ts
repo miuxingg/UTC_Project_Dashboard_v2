@@ -29,7 +29,7 @@ export const transfromOrderHistory = (item: IOrderOutput[]) => {
       books: item.orderLines.map((line, i) => {
         return {
           id: line.id,
-          thumbnail: line.book[0].thumbnail,
+          thumbnail: line.book[0]?.thumbnail,
           name: line.book[0].name,
           price: line.price,
           author: line.book[0].author,

@@ -5,20 +5,26 @@ import * as Yup from 'yup';
 import TextField from '../../components/elements/TextField';
 import { Grid, TextareaAutosize, Typography } from '@mui/material';
 import ButtonForm from '../../components/elements/ButtonForm';
+import InputImage from '../../components/elements/InputImage';
+import { useRouter } from 'next/router';
 
 const Schema = Yup.object().shape({
   title: Yup.string().required('Tiêu đề không được để trống'),
   content: Yup.string().required('Nội dung không được để trống'),
+  image: Yup.string().required('Ảnh hiển thị không được để trống'),
 });
 
 interface IBlogForm {
   onSubmit?: (data: any) => void;
+  initialValues?: any;
 }
 
-const BlogForm: React.FC<IBlogForm> = ({ onSubmit }) => {
+const BlogForm: React.FC<IBlogForm> = ({ onSubmit, initialValues }) => {
+  const router = useRouter();
   const initial = {
-    title: '',
-    content: '',
+    title: initialValues?.title || '',
+    content: initialValues?.content || '',
+    image: initialValues?.image || '',
   };
   const ref = useRef<any>();
   return (
@@ -29,7 +35,7 @@ const BlogForm: React.FC<IBlogForm> = ({ onSubmit }) => {
         onSubmit={onSubmit}
         validateOnChange={false}
       >
-        {({ handleSubmit, values, errors, handleChange }) => {
+        {({ handleSubmit, values, errors, handleChange, setFieldValue }) => {
           return (
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2} flexDirection='column'>
@@ -69,6 +75,28 @@ const BlogForm: React.FC<IBlogForm> = ({ onSubmit }) => {
                     </Grid>
                   </Grid>
                 </Grid>
+                <Grid item>
+                  <Grid
+                    container
+                    alignItems='center'
+                    justifyContent='space-between'
+                  >
+                    <Grid item xs={2}>
+                      Ảnh hiển thị
+                    </Grid>
+                    <Grid item xs={10}>
+                      <InputImage
+                        width={275}
+                        height={146}
+                        onChange={(link: string) => {
+                          setFieldValue('image', link);
+                        }}
+                        defaultValue={initial?.image}
+                        error={!!errors?.image}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
               <ButtonForm
                 primaryTextButton='Xác nhận'
@@ -76,7 +104,9 @@ const BlogForm: React.FC<IBlogForm> = ({ onSubmit }) => {
                 onPrimaryButton={() => {
                   ref.current?.click();
                 }}
-                onSecondaryButton={() => {}}
+                onSecondaryButton={() => {
+                  router.back();
+                }}
               />
               <button ref={ref} type='submit' hidden>
                 Click

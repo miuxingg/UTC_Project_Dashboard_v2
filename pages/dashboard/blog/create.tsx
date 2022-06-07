@@ -10,6 +10,7 @@ const CreateBlogPage: React.FC = () => {
       createBlog({
         title: values.title,
         content: values.content,
+        image: values.image,
       })
     );
   };

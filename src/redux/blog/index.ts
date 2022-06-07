@@ -28,6 +28,19 @@ export const getAllBlogThunk = createAsyncThunk(
     return await apiSdk.blogApis.getAllBlog(queries);
   }
 );
+
+export const updateBlog = createAsyncThunk(
+  'updateBlog',
+  async ({ id, input }: any, { dispatch }) => {
+    try {
+      const data = await apiSdk.blogApis.updateBlog(id, input);
+      dispatch(setSuccess({ message: 'Cập nhật blog thành công' }));
+      return data;
+    } catch {
+      dispatch(setError({ message: 'Cập nhật blog thất bại' }));
+    }
+  }
+);
 export const blogSlice = createGenericSlice({
   name: 'blog',
   initialState,
@@ -35,10 +48,13 @@ export const blogSlice = createGenericSlice({
     getAllBlogs(state, action) {
       state.allBlogs = action.payload;
     },
+    getBlogById(state, action) {
+      state.blog = action.payload;
+    },
   },
   extraReducers: (builder) => {},
 });
 
-export const { getAllBlogs } = blogSlice.actions;
+export const { getAllBlogs, getBlogById } = blogSlice.actions;
 
 export default blogSlice.reducer;
