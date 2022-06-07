@@ -17,4 +17,14 @@ export class BlogApi {
     });
     return data;
   }
+
+  async getBlogById(id: string): Promise<IBlogApi> {
+    const { data } = await this.axiosInstance.get(`/blog/${id}`);
+    return data;
+  }
+
+  async updateBlog(id: string, input: IBlogCreate) {
+    const { data } = await this.axiosInstance.put(`/blog/${id}`, input);
+    return data;
+  }
 }

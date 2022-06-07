@@ -37,6 +37,7 @@ export interface IProduct {
   price: number;
   publisher: ICategoryApi[];
   category: ICategoryApi[];
+  quantity: number;
   status: DocumentStatus;
   action: IAction;
   id?: string;
@@ -117,8 +118,6 @@ export const CellSelect: React.FC<{ id: string; status: DocumentStatus }> = ({
         sx={{
           m: 1,
           minWidth: 100,
-          // border: '1px solid grey',
-          // borderRadius: '4px',
         }}
       >
         <Select
@@ -170,7 +169,7 @@ const columns: ColumnDefinitionType<IProduct>[] = [
   },
   {
     key: 'author',
-    header: 'Tác gỉa',
+    header: 'Tác giả',
     width: '10%',
     align: 'left',
   },
@@ -179,7 +178,6 @@ const columns: ColumnDefinitionType<IProduct>[] = [
     header: 'Thể loại',
     width: '10%',
     align: 'left',
-
     get: (product: IProduct) => <CellArray list={product.category} />,
   },
   {
@@ -195,9 +193,14 @@ const columns: ColumnDefinitionType<IProduct>[] = [
     width: '5%',
   },
   {
+    key: 'quantity',
+    header: 'Số lượng',
+    width: '5%',
+  },
+  {
     key: 'status',
     header: 'Trạng thái',
-    width: '10%',
+    width: '5%',
     get: (product: IProduct) => (
       <CellSelect id={product.id} status={product.status} />
     ),
@@ -287,6 +290,7 @@ const ProductPage: NextPage = () => {
       publisher: book.publishers,
       category: book.category,
       status: book.documentStatus,
+      quantity: book.quantity,
       action: {
         onUpdate: () => {
           handleUpdate(book.id);

@@ -16,6 +16,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { configSelector } from '../../../redux/config/selectors';
 import { setError } from '../../../redux/app';
 import { updateConfig } from '../../../redux/config';
+import CreateIcon from '@mui/icons-material/Create';
+import { IconButton } from '@mui/material';
+import { useRouter } from 'next/router';
+import { ROUTERS } from '../../../configs/navigators';
 
 function not(a: readonly IBlogApi[], b: readonly IBlogApi[]) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -27,6 +31,7 @@ function intersection(a: readonly IBlogApi[], b: readonly IBlogApi[]) {
 
 export const TransferList: React.FC = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const allBlog = useSelector(allBlogSelector);
   const config = useSelector(configSelector);
@@ -120,6 +125,15 @@ export const TransferList: React.FC = () => {
                 />
               </ListItemIcon>
               <ListItemText id={labelId} primary={value.title} />
+              <ListItemIcon>
+                <IconButton
+                  onClick={() =>
+                    router.push(`${ROUTERS.blog.path}/${value.id}`)
+                  }
+                >
+                  <CreateIcon />
+                </IconButton>
+              </ListItemIcon>
             </ListItem>
           );
         })}

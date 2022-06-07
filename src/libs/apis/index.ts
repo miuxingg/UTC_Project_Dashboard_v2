@@ -15,6 +15,7 @@ import { ConfigApi } from './config';
 import { OrderApi } from './order';
 import { BookApi } from './product';
 import { PublisherApi } from './publisher';
+import { StatisticApi } from './statistics';
 import { VoucherApi } from './voucher';
 
 class GivenowApi {
@@ -113,6 +114,7 @@ export namespace apiSdk {
   export const blogApis = new BlogApi(instance);
   export const configApis = new ConfigApi(instance);
   export const voucherApis = new VoucherApi(instance);
+  export const statisticsApis = new StatisticApi(instance);
 }
 
 export { givenowApi };
