@@ -42,6 +42,7 @@ export interface IHistoryBookLine {
   paymentStatus: string;
   books: IHistoryBookDetail[];
   isAction?: boolean;
+  discount: number;
   onPrimaryButton?: (id: string) => void;
   onSecondButton?: (id: string) => void;
 }
@@ -55,6 +56,7 @@ const Row: React.FC<IHistoryBookLine> = ({
   stt,
   isAction,
   paymentStatus,
+  discount,
   onPrimaryButton,
   onSecondButton,
 }) => {
@@ -86,6 +88,9 @@ const Row: React.FC<IHistoryBookLine> = ({
         </TableCell>
         <TableCell align='center' sx={{ width: '10%' }}>
           {moneyFormat(total)}
+        </TableCell>
+        <TableCell align='center' sx={{ width: '10%' }}>
+          {moneyFormat(discount)}
         </TableCell>
         <TableCell sx={{ width: '15%' }}>{paymentStatus}</TableCell>
         {isAction ? (

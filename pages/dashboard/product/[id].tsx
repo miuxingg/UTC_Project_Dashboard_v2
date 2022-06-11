@@ -36,7 +36,7 @@ const ProductDetails: NextPage = () => {
           images: values.images,
           quantity: values.quantity,
           isCombo: values.isCombo,
-          books: values.isCombo ? values.books.map((item) => item.id) : [],
+          books: values.isCombo ? values.books : [],
           summary: values.summary,
           publishers: values.publisher.map((item) => item.id),
         },

@@ -15,7 +15,6 @@ const UpdateEmployee: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const employee = useSelector(employeeByIdSelector);
-  console.log(employee);
   const handleSubmit = (values: any) => {
     dispatch(
       updateAccountEmployee({

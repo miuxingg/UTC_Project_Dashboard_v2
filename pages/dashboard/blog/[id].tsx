@@ -13,7 +13,6 @@ const UpdateBlog: NextPage = () => {
   const currentBlog = useSelector(currentBlogSelector);
   const dispatch = useDispatch();
   const handleSubmit = (values: any) => {
-    console.log(values);
     dispatch(
       updateBlog({
         id: currentBlog.id,

@@ -38,6 +38,7 @@ const TabsChirdlen: React.FC<ITabsChildren> = ({
                 <TableCell align='center'>Ngày tạo</TableCell>
                 <TableCell align='center'>Địa chỉ nhận</TableCell>
                 <TableCell align='center'>Tổng tiền</TableCell>
+                <TableCell align='center'>Giảm giá</TableCell>
                 <TableCell align='center'>Đã thanh toán</TableCell>
                 {isAction ? (
                   <TableCell align='center'>Thao tác</TableCell>

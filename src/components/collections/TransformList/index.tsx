@@ -96,7 +96,6 @@ export const TransferList: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    console.log(right);
     dispatch(updateConfig({ blog: right.map(({ id }) => id) }));
   };
 

@@ -93,7 +93,7 @@ const ProductForm: React.FC<IProductForm> = ({
   const router = useRouter();
   const [isPopupConfirm, setIsPopupConfirm] = useState<boolean>(false);
   const ref = useRef<any>();
-  const [isCombo, setIsCombo] = useState<boolean>(false);
+  // const [isCombo, setIsCombo] = useState<boolean>(false);
 
   const initialValues = {
     name: initial?.name ?? '',
@@ -370,15 +370,16 @@ const ProductForm: React.FC<IProductForm> = ({
                     </Grid>
                     <Grid item xs={10}>
                       <Checkbox
+                        checked={values.isCombo}
                         onChange={(_: any, value: any) => {
-                          setIsCombo(value);
+                          // setIsCombo(value);
                           setFieldValue('isCombo', value);
                         }}
                       />
                     </Grid>
                   </Grid>
                 </Grid>
-                {isCombo ? (
+                {values.isCombo ? (
                   <InputMultiple
                     label='Sách trong bộ'
                     onChange={(_, values) => {
