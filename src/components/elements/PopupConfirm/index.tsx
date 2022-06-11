@@ -6,14 +6,16 @@ import { useState } from 'react';
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 export interface IPopupConfirm {
+  id?: string;
   open: boolean;
   title: string;
   content: string;
   onClose?: () => void;
-  onSubmit?: () => void;
+  onSubmit?: (id?: string) => void;
 }
 
 export const PopupConfirm: React.FC<IPopupConfirm> = ({
+  id,
   open,
   title,
   content,
@@ -62,7 +64,7 @@ export const PopupConfirm: React.FC<IPopupConfirm> = ({
                   type='submit'
                   variant='contained'
                   sx={{ textTransform: 'unset' }}
-                  onClick={onSubmit}
+                  onClick={() => onSubmit(id)}
                 >
                   Đồng ý
                 </Button>

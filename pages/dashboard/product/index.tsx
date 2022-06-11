@@ -74,15 +74,15 @@ export const CellArray: React.FC<{ list: ICategoryApi[] }> = ({ list }) => {
   );
 };
 
-export const CellSelect: React.FC<{ id: string; status: DocumentStatus }> = ({
-  status,
-  id,
-}) => {
+interface ICellSelect {
+  id: string;
+  status: DocumentStatus;
+}
+export const CellSelect: React.FC<ICellSelect> = ({ status, id }) => {
   const dispatch = useDispatch();
   const [statusState, setStatusState] = React.useState<DocumentStatus | string>(
     status
   );
-
   useEffect(() => {
     setStatusState(status);
   }, [status]);
@@ -90,27 +90,28 @@ export const CellSelect: React.FC<{ id: string; status: DocumentStatus }> = ({
   const [statusChoose, setStatusChoose] = React.useState<
     DocumentStatus | string
   >(status);
-
   const handleChange = (event: SelectChangeEvent) => {
     setIsPopupConfirm(true);
     setStatusChoose(event.target.value);
   };
 
-  const handleChangeStatus = useCallback(async () => {
-    const response = await dispatch(
-      updateStatusBook({
-        id: id,
-        input: {
-          documentStatus: statusChoose as DocumentStatus,
-        },
-      })
-    );
-
-    const data = unwrapResult(response as any);
-    if (data) {
-      setStatusState(statusChoose);
-    }
-  }, [statusChoose]);
+  const handleChangeStatus = useCallback(
+    async (idProduct?: string) => {
+      const response = await dispatch(
+        updateStatusBook({
+          id: idProduct,
+          input: {
+            documentStatus: statusChoose as DocumentStatus,
+          },
+        })
+      );
+      const data = unwrapResult(response as any);
+      if (data) {
+        setStatusState(statusChoose);
+      }
+    },
+    [statusChoose]
+  );
 
   return (
     <>
@@ -133,15 +134,16 @@ export const CellSelect: React.FC<{ id: string; status: DocumentStatus }> = ({
       </FormControl>
       {isPopupConfirm ? (
         <PopupConfirm
+          id={id}
           open={true}
           title='Xác nhận'
-          content='Bạn có chắc chắn xoá thể loại này?'
+          content='Bạn có chắc chắn thay đổi trạng thái sản phẩm này?'
           onClose={() => {
             setIsPopupConfirm(false);
           }}
-          onSubmit={() => {
+          onSubmit={(id?: string) => {
             setIsPopupConfirm(false);
-            handleChangeStatus();
+            handleChangeStatus(id);
           }}
         />
       ) : null}
@@ -201,9 +203,9 @@ const columns: ColumnDefinitionType<IProduct>[] = [
     key: 'status',
     header: 'Trạng thái',
     width: '5%',
-    get: (product: IProduct) => (
-      <CellSelect id={product.id} status={product.status} />
-    ),
+    get: (product: IProduct) => {
+      return <CellSelect id={product.id} status={product.status} />;
+    },
   },
   {
     key: 'action',

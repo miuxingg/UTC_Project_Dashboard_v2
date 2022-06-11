@@ -5,8 +5,6 @@ export const allBookByFilter = (state: TRootState) => {
 };
 
 export const bookBestSalerSelector = (state: TRootState) => {
-  console.log(state.books);
-
   return state.books?.bestSaler ?? { total: 0, items: [] };
 };
 
