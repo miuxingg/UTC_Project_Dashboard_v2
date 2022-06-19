@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { IDataset, IStatistic } from './type';
+import { IDataset, IStatistic, IStatisticQuery } from './type';
 
 export class StatisticApi {
   constructor(private axiosInstance: AxiosInstance) {}
@@ -9,8 +9,10 @@ export class StatisticApi {
     return data;
   }
 
-  async getDataset(): Promise<IDataset> {
-    const { data } = await this.axiosInstance.get('/order/statistics/dataset');
+  async getDataset(queries?: IStatisticQuery): Promise<IDataset> {
+    const { data } = await this.axiosInstance.get('/order/statistics/dataset', {
+      params: { ...queries },
+    });
     return data;
   }
 }
