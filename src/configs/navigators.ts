@@ -16,7 +16,8 @@ type TRouteName =
   | 'blog'
   | 'blogCreate'
   | 'voucher'
-  | 'voucherCreate';
+  | 'voucherCreate'
+  | 'config';
 
 interface IRouteProperties {
   title: string;
@@ -28,7 +29,7 @@ interface IRouteProperties {
 }
 export const ROUTERS: Record<TRouteName, IRouteProperties> = {
   login: {
-    title: 'Login',
+    title: 'Đăng nhập',
     path: '/login',
     roles: [Roles.System, Roles.Manager],
     hide: true,
@@ -40,87 +41,93 @@ export const ROUTERS: Record<TRouteName, IRouteProperties> = {
     roles: [Roles.System, Roles.Manager],
   },
   employee: {
-    title: 'Employee',
+    title: 'Nhân viên',
     path: '/dashboard/employee',
     icon: 'bi bi-patch-check',
     roles: [Roles.System],
   },
   emplyeeCreate: {
-    title: 'Employee create',
+    title: 'Tạo nhân viên',
     path: '/dashboard/employee/create',
     icon: 'bi bi-patch-check',
     roles: [Roles.System],
     hide: true,
   },
   category: {
-    title: 'Category',
+    title: 'Thể loại',
     path: '/dashboard/category',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
   },
   categoryCreate: {
-    title: 'Category Create',
+    title: 'Tạo thể loại',
     path: '/dashboard/category/create',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
     hide: true,
   },
   product: {
-    title: 'Product',
+    title: 'Sản phẩm',
     path: '/dashboard/product',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
   },
   productCreate: {
-    title: 'Category Create',
+    title: 'Tạo sản phẩm',
     path: '/dashboard/product/create',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
     hide: true,
   },
   manageOrder: {
-    title: 'Order Management',
+    title: 'Quản lý đơn hàng',
     path: '/dashboard/manage-order',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
   },
   publisher: {
-    title: 'Publisher',
+    title: 'Nhà xuất bản',
     path: '/dashboard/publisher',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
   },
   publisherCreate: {
-    title: 'Publisher',
+    title: 'Tạo nhà xuất bản',
     path: '/dashboard/publisher/create/',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
     hide: true,
   },
   blog: {
-    title: 'Blog',
+    title: 'Bài viết',
     path: '/dashboard/blog',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
   },
   blogCreate: {
-    title: 'Blog',
+    title: 'Tạo bài viết',
     path: '/dashboard/blog/create/',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
     hide: true,
   },
   voucher: {
-    title: 'Voucher',
+    title: 'Giảm giá',
     path: '/dashboard/voucher',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
   },
   voucherCreate: {
-    title: 'Voucher',
+    title: 'Tạo giảm giá',
     path: '/dashboard/voucher/create/',
     icon: 'bi bi-patch-check',
     roles: [Roles.Manager],
     hide: true,
+  },
+  config: {
+    title: 'Thiết lập',
+    path: '/dashboard/config/',
+    icon: 'bi bi-patch-check',
+    roles: [Roles.System],
   },
 };
