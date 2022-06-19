@@ -19,7 +19,7 @@ export interface IInputMultiple {
   ) => void;
   onTextChange?: (value: string) => void;
   error?: string;
-  defaultValue?: [];
+  defaultValue?: any[];
 }
 
 const InputMultiple: React.FC<IInputMultiple> = ({

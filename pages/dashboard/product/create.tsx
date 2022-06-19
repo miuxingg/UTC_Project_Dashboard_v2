@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import ProductForm from '../../../src/containers/ProductForm';
+import ProductForm, { BookStatus } from '../../../src/containers/ProductForm';
 import { apiSdk } from '../../../src/libs/apis';
 import { getServerSideWithProtectedRoute } from '../../../src/libs/hocs/getServerSideWithProtectedRoute';
 import { setCategories } from '../../../src/redux/category';
@@ -22,14 +22,14 @@ const CreateProduct: NextPage = () => {
         price: values.price,
         priceUnDiscount: values.priceUndiscount,
         thumbnail: values.thumbnail,
-        category: values.categories,
-        status: values.status,
+        category: values.categories.map(({ id }) => id),
+        status: values.status === BookStatus.NONE ? '' : values.status,
         images: values.images,
         quantity: values.quantity,
         isCombo: values.isCombo,
         books: values.isCombo ? values.books : [],
         summary: values.summary,
-        publishers: values.publisher,
+        publishers: values.publisher.map(({ id }) => id),
       })
     );
     router.back();

@@ -20,7 +20,7 @@ const ProjectTables = ({ datas }) => {
 
                 <th>Trạng thái</th>
                 <th>Giá</th>
-                <th>Combo</th>
+                {/* <th>Bộ</th> */}
               </tr>
             </thead>
             <tbody>
@@ -37,7 +37,14 @@ const ProjectTables = ({ datas }) => {
                         // height='45'
                       />
                       <div className='ms-3'>
-                        <h6 className='mb-0' style={{ maxWidth: '420px' }}>
+                        <h6
+                          className='mb-0'
+                          style={{
+                            maxWidth: '420px',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
                           {tdata.name}
                         </h6>
                         <span className='text-muted'>{tdata.author}</span>
@@ -55,7 +62,7 @@ const ProjectTables = ({ datas }) => {
                     )}
                   </td>
                   <td>{moneyFormat(tdata.price)}</td>
-                  <td>{tdata.isCombo ? 'Có' : 'Không'}</td>
+                  {/* <td>{tdata.isCombo ? 'Có' : 'Không'}</td> */}
                 </tr>
               ))}
             </tbody>
