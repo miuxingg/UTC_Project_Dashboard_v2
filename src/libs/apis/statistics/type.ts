@@ -9,3 +9,7 @@ export interface IDataset {
   money: { [field: string]: number };
   quantity: { [field: string]: number };
 }
+
+export interface IStatisticQuery {
+  year?: number;
+}

@@ -7,9 +7,13 @@ import TopCards from '../src/components/dashboard/TopCards';
 import Blog from '../src/components/dashboard/Blog';
 import { getServerSideWithProtectedRoute } from '../src/libs/hocs/getServerSideWithProtectedRoute';
 import { apiSdk } from '../src/libs/apis';
-import { getDataset, getStatistic } from '../src/redux/statistics';
+import {
+  getDataset,
+  getStatistic,
+  getStatisticByQuery,
+} from '../src/redux/statistics';
 import { NextPage } from 'next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   datasetSelector,
   statisticSelector,
@@ -18,17 +22,22 @@ import { moneyFormat } from '../src/libs/utils';
 import { getConfig } from '../src/redux/config';
 import { configSelector } from '../src/redux/config/selectors';
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
-import { getEmployee } from '../src/redux/auth';
-import { employeeSelector } from '../src/redux/auth/selectors';
+import { useEffect, useMemo, useState } from 'react';
+
 import { bookBestSalerSelector } from '../src/redux/product/selectors';
 import { getBookBestSaler } from '../src/redux/product';
 
 export const Home: NextPage = () => {
+  const dispatch = useDispatch();
   const statistics = useSelector(statisticSelector);
   const dataset = useSelector(datasetSelector);
   const config = useSelector(configSelector);
   const bookBestSalers = useSelector(bookBestSalerSelector);
+  const [year, setYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    dispatch(getStatisticByQuery({ year }));
+  }, [dispatch, year]);
 
   const datasetMapping = useMemo(() => {
     const { money, quantity } = dataset;
@@ -40,7 +49,9 @@ export const Home: NextPage = () => {
     }
     return { money: moneyData, quantity: quantityData };
   }, [dataset]);
-
+  const handleYearChange = (year: number) => {
+    setYear(year);
+  };
   return (
     <div>
       <Head>
@@ -49,7 +60,6 @@ export const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div>
-        {/***Top Cards***/}
         <Row>
           <Col sm='6' lg='3'>
             <TopCards
@@ -88,25 +98,20 @@ export const Home: NextPage = () => {
             />
           </Col>
         </Row>
-        {/***Sales & Feed***/}
         <Row>
           <Col sm='12' lg='12' xl='12' xxl='12'>
             <SalesChart
               money={datasetMapping.money}
               quantity={datasetMapping.quantity}
+              onYearChange={handleYearChange}
             />
           </Col>
-          {/* <Col sm='12' lg='6' xl='5' xxl='4'>
-            <Feeds />
-          </Col> */}
         </Row>
-        {/***Table ***/}
         <Row>
           <Col lg='12' sm='12'>
             <ProjectTables datas={bookBestSalers.items.slice(0, 10)} />
           </Col>
         </Row>
-        {/***Blog Cards***/}
         <Row>
           {config?.blog.map((blg) => (
             <Col sm='6' lg='6' xl='3' key={blg.title}>
@@ -115,7 +120,6 @@ export const Home: NextPage = () => {
                 title={blg.title}
                 subtitle={dayjs(blg.createdAt).format('DD/MM/YYYY')}
                 text={blg.content}
-                // color={blg.}
               />
             </Col>
           ))}

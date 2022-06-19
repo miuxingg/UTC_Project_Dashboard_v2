@@ -1,7 +1,18 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { apiSdk } from '../../libs/apis';
+import { IStatisticQuery } from '../../libs/apis/statistics/type';
 import { createGenericSlice } from '../../libs/utils/createGenericSlice';
 import { IStatisticsState } from './types';
 
 export const initialState: IStatisticsState = {};
+
+export const getStatisticByQuery = createAsyncThunk(
+  'getStatisticByQuery',
+  async (queries?: IStatisticQuery) => {
+    const data = await apiSdk.statisticsApis.getDataset(queries);
+    return data;
+  }
+);
 
 export const statisticsSlice = createGenericSlice({
   name: 'statistic',
@@ -14,7 +25,11 @@ export const statisticsSlice = createGenericSlice({
       state.dataset = action.payload;
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(getStatisticByQuery.fulfilled, (state, action) => {
+      state.dataset = action.payload;
+    });
+  },
 });
 
 export const { getStatistic, getDataset } = statisticsSlice.actions;

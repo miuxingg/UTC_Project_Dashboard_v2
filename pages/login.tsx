@@ -19,6 +19,7 @@ import { useState } from 'react';
 import { setError, setSuccess } from '../src/redux/app';
 import { useRouter } from 'next/router';
 import { ROUTERS } from '../src/configs/navigators';
+import { apiSdk } from '../src/libs/apis';
 
 const theme = createTheme();
 
@@ -30,6 +31,7 @@ export default function SignIn() {
     password: '',
   });
 
+  const [email, setEmail] = useState<string>('');
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -70,6 +72,16 @@ export default function SignIn() {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (email) {
+      await apiSdk.authApis.forgotPassword({ email });
+    } else {
+      dispatch(
+        setError({ message: 'Bạn nhập email và mật khẩu thay đổi gần nhất' })
+      );
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs'>
@@ -105,6 +117,7 @@ export default function SignIn() {
               autoFocus
               error={!!errorMessage?.email}
               helperText={errorMessage?.email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin='normal'
@@ -132,7 +145,7 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href='#' variant='body2'>
+                <Link href='' variant='body2' onClick={handleForgotPassword}>
                   Forgot password?
                 </Link>
               </Grid>

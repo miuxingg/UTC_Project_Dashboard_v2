@@ -74,4 +74,12 @@ export class AuthApi {
     const { data } = await this.axiosInstance.delete(`/auth/employee/${id}`);
     return data;
   }
+
+  async forgotPassword(input: { email: string }) {
+    const { data } = await this.axiosInstance.post(
+      '/auth/forgot-password',
+      input
+    );
+    return data;
+  }
 }

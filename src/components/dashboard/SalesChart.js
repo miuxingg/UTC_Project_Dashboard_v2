@@ -1,9 +1,16 @@
 import { Card, CardBody, CardSubtitle, CardTitle } from 'reactstrap';
 import dynamic from 'next/dynamic';
-
+import {
+  Checkbox,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const SalesChart = ({ money, quantity }) => {
+const SalesChart = ({ money, quantity, onYearChange }) => {
   const chartoptions = {
     series: [
       {
@@ -49,13 +56,29 @@ const SalesChart = ({ money, quantity }) => {
       },
     },
   };
+  const currentYear = new Date().getFullYear();
   return (
     <Card>
       <CardBody>
-        <CardTitle tag='h5'>Báo cáo theo tháng</CardTitle>
-        {/* <CardSubtitle className='text-muted' tag='h6'>
-          Yearly Sales Report
-        </CardSubtitle> */}
+        <CardTitle tag='h5'>Báo cáo theo năm</CardTitle>
+        <FormControl style={{ width: '130px' }}>
+          <InputLabel id='demo-simple-select-label'>Năm</InputLabel>
+          <Select
+            name='year'
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            // value={values.status}
+            label='Năm'
+            onChange={(e) => {
+              onYearChange(e.target.value);
+            }}
+            defaultValue={currentYear}
+          >
+            <MenuItem value={currentYear}>{currentYear}</MenuItem>
+            <MenuItem value={currentYear - 1}>{currentYear - 1}</MenuItem>
+            <MenuItem value={currentYear - 2}>{currentYear - 2}</MenuItem>
+          </Select>
+        </FormControl>
         <Chart
           type='area'
           width='100%'
