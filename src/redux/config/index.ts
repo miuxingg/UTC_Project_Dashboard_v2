@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { apiSdk } from '../../libs/apis';
-import { ICategoryCreate } from '../../libs/apis/category/types';
 import { IConfigCreate } from '../../libs/apis/config/types';
-import { BaseQuery } from '../../libs/utils/buildQueries';
 import { createGenericSlice } from '../../libs/utils/createGenericSlice';
 import { setError, setSuccess } from '../app';
 import { IConfigState } from './types';
@@ -17,6 +15,8 @@ export const updateConfig = createAsyncThunk(
       dispatch(setSuccess({ message: 'Thay đổi thành công' }));
       return data;
     } catch (error) {
+      console.log(error);
+
       dispatch(setError({ message: 'Thay đổi thất bại' }));
     }
   }

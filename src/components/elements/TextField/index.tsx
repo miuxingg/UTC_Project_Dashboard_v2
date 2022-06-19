@@ -1,9 +1,6 @@
 import { Grid, TextField as TextFieldMui, TextFieldProps } from '@mui/material';
 import React from 'react';
 
-// export interface ITextField extends TextFieldProps {
-//   title?: string;
-// }
 const TextField: React.FC<TextFieldProps> = (props) => {
   return (
     <Grid container alignItems='center' justifyContent='space-between'>

@@ -29,9 +29,6 @@ export const Home: NextPage = () => {
   const dataset = useSelector(datasetSelector);
   const config = useSelector(configSelector);
   const bookBestSalers = useSelector(bookBestSalerSelector);
-  // console.log(bookBestSalers);
-
-  // console.log(config);
 
   const datasetMapping = useMemo(() => {
     const { money, quantity } = dataset;

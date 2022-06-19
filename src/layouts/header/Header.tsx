@@ -5,9 +5,7 @@ import {
   Navbar,
   Collapse,
   Nav,
-  NavItem,
   NavbarBrand,
-  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -80,10 +78,10 @@ const Header = ({ showMobmenu }) => {
             </div>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem header>Info</DropdownItem>
+            {/* <DropdownItem header>Info</DropdownItem>
             <DropdownItem>My Account</DropdownItem>
             <DropdownItem>Edit Profile</DropdownItem>
-            <DropdownItem divider />
+            <DropdownItem divider /> */}
             <DropdownItem onClick={handleAuthenClick}>
               {isAuthenticated ? 'Đăng xuất' : 'Đăng nhập'}
             </DropdownItem>
