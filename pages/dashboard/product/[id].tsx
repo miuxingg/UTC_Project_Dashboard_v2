@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ProductForm from '../../../src/containers/ProductForm';
+import ProductForm, { BookStatus } from '../../../src/containers/ProductForm';
 import { apiSdk } from '../../../src/libs/apis';
 import { getServerSideWithProtectedRoute } from '../../../src/libs/hocs/getServerSideWithProtectedRoute';
 import { setCategories } from '../../../src/redux/category';
@@ -32,7 +32,7 @@ const ProductDetails: NextPage = () => {
           priceUnDiscount: values.priceUndiscount,
           thumbnail: values.thumbnail,
           category: values.categories.map((item) => item.id),
-          status: values.status,
+          status: values.status === BookStatus.NONE ? '' : values.status,
           images: values.images,
           quantity: values.quantity,
           isCombo: values.isCombo,

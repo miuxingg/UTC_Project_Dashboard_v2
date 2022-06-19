@@ -1,4 +1,11 @@
-import { Checkbox, Grid } from '@mui/material';
+import {
+  Checkbox,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +27,11 @@ import { getAllCategory } from '../../redux/category';
 import { getAllPublishers } from '../../redux/publisher';
 import CloudtagForm from './CloudtagForm';
 import { Formik } from 'formik';
-
+export enum BookStatus {
+  NONE = 'Không',
+  HOT = 'HOT',
+  NEW = 'NEW',
+}
 interface IProductForm {
   onSubmitForm: (values: any) => void;
   initial?: any;
@@ -62,23 +73,6 @@ const Schema = Yup.object().shape({
     }),
 });
 
-// const Schema = Yup.object().shape({
-//   name: Yup.string(),
-//   author: Yup.string(),
-//   categories: Yup.array(),
-//   publisher: Yup.array(),
-//   status: Yup.string().default('None'),
-//   thumbnail: Yup.string(),
-//   images: Yup.array(),
-//   description: Yup.string(),
-//   summary: Yup.string(),
-//   price: Yup.number(),
-//   priceUndiscount: Yup.number(),
-//   quantity: Yup.number(),
-//   isCombo: Yup.boolean().default(false),
-//   books: Yup.array().default([]),
-// });
-
 const ProductForm: React.FC<IProductForm> = ({
   onSubmitForm,
   initial,
@@ -88,12 +82,10 @@ const ProductForm: React.FC<IProductForm> = ({
   const categories = useSelector(allCategoriesSelector);
   const publisher = useSelector(allPublisher);
   const booksSelector = useSelector(allBookByFilter);
-  // console.log(booksSelector);
 
   const router = useRouter();
   const [isPopupConfirm, setIsPopupConfirm] = useState<boolean>(false);
   const ref = useRef<any>();
-  // const [isCombo, setIsCombo] = useState<boolean>(false);
 
   const initialValues = {
     name: initial?.name ?? '',
@@ -112,6 +104,7 @@ const ProductForm: React.FC<IProductForm> = ({
     books: initial?.books ?? [],
     cloudTag: initial?.cloudTag ?? [],
   };
+
   const handleSubmitForm = (values: any) => {
     if (values) {
       onSubmitForm(values);
@@ -170,10 +163,7 @@ const ProductForm: React.FC<IProductForm> = ({
                   <InputMultiple
                     label='Thể loại'
                     onChange={(_, value) => {
-                      setFieldValue(
-                        'categories',
-                        value.map(({ id }) => id)
-                      );
+                      setFieldValue('categories', value);
                     }}
                     options={categories.items}
                     onTextChange={handleTextCategoriesChange}
@@ -185,10 +175,7 @@ const ProductForm: React.FC<IProductForm> = ({
                   <InputMultiple
                     label='Nhà xuất bản'
                     onChange={(_, value) => {
-                      setFieldValue(
-                        'publisher',
-                        value.map(({ id }) => id)
-                      );
+                      setFieldValue('publisher', value);
                     }}
                     options={publisher.items}
                     onTextChange={handleTextPublisherChange}
@@ -197,14 +184,48 @@ const ProductForm: React.FC<IProductForm> = ({
                   />
                 </Grid>
                 <Grid item>
-                  <TextField
+                  {/* <TextField
                     name='status'
                     value={values.status}
                     helperText={errors.status}
                     label='Trạng thái'
                     placeholder='Trạng thái'
                     onChange={handleChange}
-                  />
+                  /> */}
+                  <Grid
+                    container
+                    alignItems='center'
+                    justifyContent='space-between'
+                  >
+                    <Grid item xs={2}>
+                      Trạng thái
+                    </Grid>
+                    <Grid item xs={10}>
+                      <FormControl fullWidth>
+                        <InputLabel id='demo-simple-select-label'>
+                          Trạng thái
+                        </InputLabel>
+                        <Select
+                          name='status'
+                          labelId='demo-simple-select-label'
+                          id='demo-simple-select'
+                          value={values.status}
+                          label='Trạng thái'
+                          onChange={(e) => {
+                            setFieldValue('status', e.target.value);
+                          }}
+                        >
+                          <MenuItem value={BookStatus.NONE}>Không</MenuItem>
+                          <MenuItem value={BookStatus.NEW}>
+                            {BookStatus.NEW}
+                          </MenuItem>
+                          <MenuItem value={BookStatus.HOT}>
+                            {BookStatus.HOT}
+                          </MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <Grid item>
                   <CloudtagForm
@@ -400,7 +421,7 @@ const ProductForm: React.FC<IProductForm> = ({
                 primaryTextButton='Xác nhận'
                 secondaryTextButton='Huỷ'
                 onPrimaryButton={() => setIsPopupConfirm(true)}
-                onSecondaryButton={() => router.push(ROUTERS.category.path)}
+                onSecondaryButton={() => router.push(ROUTERS.product.path)}
               />
               {isPopupConfirm ? (
                 <PopupConfirm

@@ -61,7 +61,7 @@ const CategoryForm: React.FC<ICategoryForm> = ({
                 primaryTextButton='Xác nhận'
                 secondaryTextButton='Huỷ'
                 onPrimaryButton={() => setIsPopupConfirm(true)}
-                onSecondaryButton={() => router.push(ROUTERS.category.path)}
+                onSecondaryButton={() => router.push(ROUTERS.publisher.path)}
               />
               {isPopupConfirm ? (
                 <PopupConfirm
