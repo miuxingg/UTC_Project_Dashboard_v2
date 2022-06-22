@@ -5,64 +5,20 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { profileSelector } from '../../../redux/auth/selectors';
 import { ROUTERS } from '../../../configs/navigators';
-
-const navigation = [
-  {
-    title: 'Dashboard',
-    href: '/',
-    icon: 'bi bi-speedometer2',
-  },
-  {
-    title: 'Hello',
-    href: '/ui/hello',
-    icon: 'bi bi-bell',
-  },
-  {
-    title: 'Badges',
-    href: '/ui/badges',
-    icon: 'bi bi-patch-check',
-  },
-  {
-    title: 'Buttons',
-    href: '/ui/buttons',
-    icon: 'bi bi-hdd-stack',
-  },
-  {
-    title: 'Cards',
-    href: '/ui/cards',
-    icon: 'bi bi-card-text',
-  },
-  {
-    title: 'Grid',
-    href: '/ui/grid',
-    icon: 'bi bi-columns',
-  },
-  {
-    title: 'Table',
-    href: '/ui/tables',
-    icon: 'bi bi-layout-split',
-  },
-  {
-    title: 'Forms',
-    href: '/ui/forms',
-    icon: 'bi bi-textarea-resize',
-  },
-  {
-    title: 'Breadcrumbs',
-    href: '/ui/breadcrumbs',
-    icon: 'bi bi-link',
-  },
-  {
-    title: 'About',
-    href: '/about',
-    icon: 'bi bi-people',
-  },
-];
+import { useEffect } from 'react';
+import { IOrderStatus } from '../../../libs/apis/order/types';
+import { getOrderByStatus } from '../../../redux/order';
+import { allOrdersByStatusSelector } from '../../../redux/order/selectors';
 
 const Sidebar = ({ showMobilemenu }) => {
+  const dispatch = useDispatch();
   let curl = useRouter();
   const location = curl.pathname;
   const profile = useSelector(profileSelector);
+  // const orderByStatus = useSelector(allOrdersByStatusSelector);
+  // useEffect(() => {
+  //   dispatch(getOrderByStatus({ status: IOrderStatus.Pending }));
+  // }, []);
 
   return (
     <div className='p-3'>
@@ -95,15 +51,6 @@ const Sidebar = ({ showMobilemenu }) => {
               </NavItem>
             ) : null;
           })}
-          {/* <Button
-            color='danger'
-            tag='a'
-            target='_blank'
-            className='mt-3'
-            href='https://www.wrappixel.com/templates/xtreme-react-redux-admin/?ref=33'
-          >
-            Upgrade To Pro
-          </Button> */}
         </Nav>
       </div>
     </div>

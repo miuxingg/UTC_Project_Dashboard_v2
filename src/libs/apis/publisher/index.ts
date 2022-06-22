@@ -17,6 +17,15 @@ export class PublisherApi {
     return data;
   }
 
+  async getAllPublisherAdmin(
+    queries?: BaseQuery
+  ): Promise<IPaginationOutput<IPublisherApi>> {
+    const { data } = await this.axiosInstance.get('/publisher/admin', {
+      params: { ...queries },
+    });
+    return data;
+  }
+
   async createPublisher(input: ICategoryCreate) {
     const { data } = await this.axiosInstance.post('/publisher', input);
     return data;

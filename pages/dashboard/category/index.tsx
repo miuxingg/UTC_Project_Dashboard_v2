@@ -10,7 +10,7 @@ import TableWarpper from '../../../src/components/collections/TableWrapper';
 import { getServerSideWithProtectedRoute } from '../../../src/libs/hocs/getServerSideWithProtectedRoute';
 import {
   deleteCategory,
-  getAllCategory,
+  getAllCategoryByAdmin,
   setCategories,
 } from '../../../src/redux/category';
 import { useCallback, useEffect, useState } from 'react';
@@ -114,7 +114,7 @@ const CategoryPage: NextPage = () => {
 
   useEffect(() => {
     dispatch(
-      getAllCategory({
+      getAllCategoryByAdmin({
         limit: rowsPerPage,
         offset: page * rowsPerPage,
         search: search,
@@ -162,7 +162,7 @@ const CategoryPage: NextPage = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     dispatch(
-      getAllCategory({
+      getAllCategoryByAdmin({
         limit: rowsPerPage,
         offset: page * rowsPerPage,
         search: e.target.value,
@@ -207,7 +207,7 @@ const CategoryPage: NextPage = () => {
 
 export const getServerSideProps = getServerSideWithProtectedRoute(
   async (ctx, store) => {
-    const categories = await apiSdk.categoryApis.getAllCategory();
+    const categories = await apiSdk.categoryApis.getAllCategoryByAdmin();
     store.dispatch(setCategories(categories));
     return {
       props: {},

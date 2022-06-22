@@ -15,6 +15,15 @@ export class CategoryApi {
     return data;
   }
 
+  async getAllCategoryByAdmin(
+    queries?: BaseQuery
+  ): Promise<IPaginationOutput<ICategoryApi>> {
+    const { data } = await this.axiosInstance.get('/category/admin', {
+      params: { ...queries },
+    });
+    return data;
+  }
+
   async createCategory(input: ICategoryCreate) {
     const { data } = await this.axiosInstance.post('/category', input);
     return data;

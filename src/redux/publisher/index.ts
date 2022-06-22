@@ -16,6 +16,14 @@ export const getAllPublishers = createAsyncThunk(
   }
 );
 
+export const getAllPublishersAdmin = createAsyncThunk(
+  'getAllPublishersAdmin',
+  async (queries?: BaseQuery) => {
+    const data = await apiSdk.publisherApis.getAllPublisherAdmin(queries);
+    return data;
+  }
+);
+
 export const createPublisher = createAsyncThunk(
   'createPublisher',
   async (input: ICategoryCreate, { dispatch }) => {
@@ -88,6 +96,13 @@ export const publisherSlice = createGenericSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getAllPublishers.fulfilled, (state, action) => {
+      state.allPublisher = {
+        items: action.payload.items,
+        total: action.payload.total,
+      };
+    });
+
+    builder.addCase(getAllPublishersAdmin.fulfilled, (state, action) => {
       state.allPublisher = {
         items: action.payload.items,
         total: action.payload.total,
