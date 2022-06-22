@@ -24,6 +24,7 @@ import { useRouter } from 'next/router';
 import PopupConfirm from '../../../src/components/elements/PopupConfirm';
 import {
   getAllPublishers,
+  getAllPublishersAdmin,
   setPublishers,
   updatePublisherStatus,
 } from '../../../src/redux/publisher';
@@ -151,7 +152,7 @@ const CategoryPage: NextPage = () => {
 
   useEffect(() => {
     dispatch(
-      getAllPublishers({
+      getAllPublishersAdmin({
         limit: rowsPerPage,
         offset: page * rowsPerPage,
         search: search,
@@ -198,7 +199,7 @@ const CategoryPage: NextPage = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     dispatch(
-      getAllPublishers({
+      getAllPublishersAdmin({
         limit: rowsPerPage,
         offset: page * rowsPerPage,
         search: e.target.value,
@@ -243,7 +244,7 @@ const CategoryPage: NextPage = () => {
 
 export const getServerSideProps = getServerSideWithProtectedRoute(
   async (ctx, store) => {
-    const publishers = await apiSdk.publisherApis.getAllPublisher({
+    const publishers = await apiSdk.publisherApis.getAllPublisherAdmin({
       limit: 5,
       offset: 0,
     });

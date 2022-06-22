@@ -16,6 +16,14 @@ export const getAllCategory = createAsyncThunk(
   }
 );
 
+export const getAllCategoryByAdmin = createAsyncThunk(
+  'getAllCategoryByAdmin',
+  async (queries: BaseQuery) => {
+    const data = await apiSdk.categoryApis.getAllCategoryByAdmin(queries);
+    return data;
+  }
+);
+
 export const createCategory = createAsyncThunk(
   'createCategory',
   async (input: ICategoryCreate, { dispatch }) => {
@@ -81,6 +89,13 @@ export const categorySlice = createGenericSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getAllCategory.fulfilled, (state, action) => {
+      state.categories = {
+        items: action.payload.items,
+        total: action.payload.total,
+      };
+    });
+
+    builder.addCase(getAllCategoryByAdmin.fulfilled, (state, action) => {
       state.categories = {
         items: action.payload.items,
         total: action.payload.total,

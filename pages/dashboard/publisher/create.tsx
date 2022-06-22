@@ -12,7 +12,15 @@ const CategoryCreate: React.FC = () => {
     dispatch(createPublisher({ name: values.name }));
     router.back();
   };
-  return <CategoryForm onSubmitForm={handleSubmitForm} />;
+  return (
+    <CategoryForm
+      onSubmitForm={handleSubmitForm}
+      customText={{
+        title: 'Nhà xuất bản',
+        content: 'Bạn có chắc chắn thêm nhà xuất bản này',
+      }}
+    />
+  );
 };
 
 export const getServerSideProps = getServerSideWithProtectedRoute(
